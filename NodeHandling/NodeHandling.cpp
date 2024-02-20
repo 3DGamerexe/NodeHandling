@@ -142,7 +142,6 @@ public:
             current = current->next;
         }
         cout << endl;
-
     }
 };
 
@@ -180,6 +179,11 @@ public:
         //input should be length 1
         if (el.length() == 1) {
             head = new DLLNode(el, head, 0);
+
+            if (head->next != nullptr) {
+                head->next->prev = head;
+            }
+
             if (tail == nullptr) {
                 tail = head;
             }
@@ -200,6 +204,44 @@ public:
         }
         else {
             std::cout << "The value you entered should be a single character or digit." << endl;
+        }
+    }
+
+    void DH() {
+        //1 value in list
+        if (head == tail && head != nullptr) {
+            delete head;
+            head = tail = nullptr;
+            std::cout << "Your list is now empty." << endl; 
+
+        }
+        //no values in the list
+        else if (head == nullptr) {
+            std::cout << "Your list is empty. Try filling the list first." << endl;
+        }
+        else {
+            DLLNode* tmp = new DLLNode();
+            tmp = head;
+            head = head->next;
+            delete tmp;
+            tmp = nullptr; 
+        }
+    } 
+
+    void DT() {
+        //1 value in the list
+        if (tail == head && tail != nullptr) {
+            delete head;
+            head = tail = nullptr;
+            std::cout << "Your list is now empty." << endl;
+        }
+        else if (tail == nullptr) {
+            std::cout << "Your list is empty. Try filling the list first." << endl; 
+        }
+        else {
+            tail = tail->prev;
+            delete tail->next;
+            tail->next = 0;
         }
     }
  
@@ -275,6 +317,12 @@ int main()
                     std::cin >> value;
                     doubly.IT(value);
                     break; 
+                case 8:
+                    doubly.DH();
+                    break;
+                case 9:
+                    doubly.DT();
+                    break;
                 case 11:
                     doubly.PD();
                     break;
