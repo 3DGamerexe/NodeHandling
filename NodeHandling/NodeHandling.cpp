@@ -40,7 +40,7 @@ public:
         }
         else {
             head = new IntSLLNode(el, head);
-            if (tail == 0) {
+            if (tail == nullptr) {
                 tail = head;
             }
         }      
@@ -151,13 +151,14 @@ class DLLNode {
 public:
 
     class DoublyLinkedList;
+
     DLLNode() {
         prev = nullptr;
         next = nullptr;
     }
 
-    DLLNode(string info, DLLNode* pred, DLLNode* nxt) {
-        data = info; prev = pred; next = nxt;
+    DLLNode(string info,  DLLNode* nxt = nullptr, DLLNode * pred = nullptr) {
+        data = info; next = nxt; prev = pred;
     }
     string data;
     DLLNode* prev;
@@ -176,7 +177,39 @@ public:
     }
 
     void IH(string el) {
+        //input should be length 1
+        if (el.length() == 1) {
+            head = new DLLNode(el, head, 0);
+            if (tail == nullptr) {
+                tail = head;
+            }
+        }
+        else {
+            std::cout << "The value you entered should be a single character or digit." << endl;
+        }
+    }
 
+    void IT(string el) {
+        //input should be length 1 
+        if (el.length() == 1) {
+            if (tail != nullptr) {
+                tail = new DLLNode(el, 0, tail);
+                tail->prev->next = tail;
+            }
+            else head = tail = new DLLNode(el);
+        }
+        else {
+            std::cout << "The value you entered should be a single character or digit." << endl;
+        }
+    }
+ 
+    void PD() {
+        DLLNode* current = head;
+        while (current != nullptr) {
+            std::cout << current->data << " ";
+            current = current->next;
+        }
+        cout << endl;
     }
 };
 
@@ -237,6 +270,13 @@ int main()
                 case 6:
                     std::cin >> value;
                     doubly.IH(value);
+                    break;
+                case 7:
+                    std::cin >> value;
+                    doubly.IT(value);
+                    break; 
+                case 11:
+                    doubly.PD();
                     break;
                 }
             }
