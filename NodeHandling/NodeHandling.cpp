@@ -71,18 +71,60 @@ public:
     }
 
     void DT() {
-        if (tail == head) {
+        if (tail == nullptr) {  //if there are no elements
+            cout << "Empty: No value to delete." << endl; 
+        }
+        else if (tail == head) { //if there is only 1 element
             delete head;
             tail = head = nullptr;
         }
         else {
-            IntSLLNode* tmp;
-            for (tmp = head; tmp->next != tail; tmp = tmp->next) {
-                delete tail;
-                tail = tmp;
-                tail->next = 0;
+            IntSLLNode* tmp = head;
+            while (tmp->next != tail) {
+                tmp = tmp->next;
+            }
+            delete tail;
+            tail = tmp;
+            tail->next = nullptr;
+        }
+    }
+
+    void SD(string el) {
+
+        if (head != 0) {
+            //only one node in the list
+            if (head == tail && head->info == el) {
+                delete head;
+                head = tail = nullptr;
+            }
+
+            //if more than 1 node in the list and the element is the head
+            else if (el == head->info) {
+                IntSLLNode* tmp = head;
+                head = head->next;
+                delete tmp;
+            }
+            //multiple nodes with any value that isn't the head
+            else {
+                IntSLLNode* pred, * tmp;
+                for (pred = head, tmp = head->next; tmp != nullptr; pred = pred->next, tmp = tmp->next) {
+                    if (tmp->info == el) {
+                        pred->next = tmp->next;
+                        if (tmp == tail)
+                            tail = pred;
+                        delete tmp;
+                        return;
+                    }
+                    else {
+                        cout << "Value is not in LinkedList. Sorry." << endl;
+                        return;
+                    }
+                }
+
             }
         }
+        
+
     }
 
     void PS() {
@@ -115,6 +157,7 @@ int main()
 
      do {
         Menu();
+        std::cout << "Choose: ";
         std::cin >> menuValue;
 
         if (menuValue < 0 || menuValue > 12 || cin.fail()) {
@@ -139,6 +182,10 @@ int main()
                     break;
                 case 3:
                     single.DT();
+                    break;
+                case 4:
+                    std::cin >> value;
+                    single.SD(value);
                     break;
                 case 5:
                     single.PS();
