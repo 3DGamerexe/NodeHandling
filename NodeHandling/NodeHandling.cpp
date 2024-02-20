@@ -8,7 +8,7 @@ using namespace std;
 class IntSLLNode {
 
 public:
-    class SinglyLinkedList;  
+    class SinglyLinkedList; 
 
     IntSLLNode() {
         next = 0;
@@ -33,10 +33,10 @@ public:
         tail = nullptr;
     }
     
+ 
     void IH(string el) {
-
         if (el.length() > 1) {
-            cout << "The value you entered should be a single character or digit." << endl;
+            std::cout << "The value you entered should be a single character or digit." << endl;
         }
         else {
             head = new IntSLLNode(el, head);
@@ -47,13 +47,17 @@ public:
     }
 
     void IT(string el) {
-
-        if (tail != nullptr) {
-            tail->next = new IntSLLNode(el);
-            tail = tail->next;
+        if (el.length() == 1) {
+            if (tail != nullptr) {
+                tail->next = new IntSLLNode(el);
+                tail = tail->next;
+            }
+            else
+                head = tail = new IntSLLNode(el);
         }
-        else 
-            head = tail = new IntSLLNode(el);
+        else {
+            std::cout << "The value you entered should be a single character or digit." << endl;
+        }
     }
 
     void DH() {
@@ -91,6 +95,7 @@ public:
 
     void SD(string el) {
 
+        //continue if there are values in the linkedList
         if (head != 0) {
             //only one node in the list
             if (head == tail && head->info == el) {
@@ -123,7 +128,9 @@ public:
 
             }
         }
-        
+        else {
+            std::cout << "Empty: Try filling the list with values first." << endl;
+        }
 
     }
 
@@ -139,6 +146,39 @@ public:
     }
 };
 
+//Doubly Linked List
+class DLLNode {
+public:
+
+    class DoublyLinkedList;
+    DLLNode() {
+        prev = nullptr;
+        next = nullptr;
+    }
+
+    DLLNode(string info, DLLNode* pred, DLLNode* nxt) {
+        data = info; prev = pred; next = nxt;
+    }
+    string data;
+    DLLNode* prev;
+    DLLNode* next;
+
+};
+
+class DLLNode::DoublyLinkedList {
+public:
+    DLLNode* head;
+    DLLNode* tail;
+
+    DoublyLinkedList() {
+        head = nullptr;
+        tail = nullptr; 
+    }
+
+    void IH(string el) {
+
+    }
+};
 
 
 void Menu() {
@@ -154,6 +194,7 @@ int main()
     int menuValue;
     std::string value;  
     IntSLLNode::SinglyLinkedList single;
+    DLLNode::DoublyLinkedList doubly;
 
      do {
         Menu();
@@ -161,7 +202,7 @@ int main()
         std::cin >> menuValue;
 
         if (menuValue < 0 || menuValue > 12 || cin.fail()) {
-            cout << "Invalid. Enter a valid number provided in the Menu.";
+            std::cout << "Invalid. Enter a valid number provided in the Menu.";
         }
 
         else {
@@ -190,11 +231,19 @@ int main()
                 case 5:
                     single.PS();
                 }
-            }    
+            }  
+            else if (menuValue < 12) {
+                switch (menuValue) {
+                case 6:
+                    std::cin >> value;
+                    doubly.IH(value);
+                    break;
+                }
+            }
         }
         
         if (menuValue == 12) {
-            cout << "Thank you! Have a nice day!";
+            std::cout << "Thank you! Have a nice day!";
         }
 
      } while (menuValue != 12);
