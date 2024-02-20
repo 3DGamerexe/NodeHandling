@@ -38,46 +38,62 @@ public:
         if (el.length() > 1) {
             cout << "The value you entered should be a single character or digit." << endl;
         }
-        else if (el.length() == 1) {
+        else {
             head = new IntSLLNode(el, head);
             if (tail == 0) {
                 tail = head;
             }
+        }      
+    }
+
+    void IT(string el) {
+
+        if (tail != nullptr) {
+            tail->next = new IntSLLNode(el);
+            tail = tail->next;
         }
+        else 
+            head = tail = new IntSLLNode(el);
+    }
 
-        /*head = new IntSLLNode(el, head);
-        if (tail == 0) {
-            tail = head;
-        }*/
+    void DH() {
+        if (head != nullptr) {
+            IntSLLNode* tmp = head;
+            head = head->next;              
+            delete tmp;
+            if (head == nullptr) {
+                tail = nullptr;
+            }
+        }
+        else {
+            cout << "Empty: No value to delete." << endl;
+        }
+    }
 
-        //if (el.length() > 1) {
-        //    cout << "The value you enter in the LinkedList should be a single character or digit." << endl;
-        //}
-
-        //else if (el.length() == 1) {
-        //    //head = new IntSLLNode(el, head);
-        //    IntSLLNode* newNode = new IntSLLNode(el, head);
-        //    head = newNode; 
-
-        //    if (tail == nullptr) {
-        //        tail = head;
-        //    }
-        //    PS(head);
-        //}       
+    void DT() {
+        if (tail == head) {
+            delete head;
+            tail = head = nullptr;
+        }
+        else {
+            IntSLLNode* tmp;
+            for (tmp = head; tmp->next != tail; tmp = tmp->next) {
+                delete tail;
+                tail = tmp;
+                tail->next = 0;
+            }
+        }
     }
 
     void PS() {
         IntSLLNode* current = head; 
 
-        while (current != 0) {
+        while (current != nullptr) {
             cout << current->info << " ";
             current = current->next;
         }
         cout << endl;
 
-        /*if (head != NULL) {
-            cout << head -> info << endl;
-        }*/
     }
 };
 
@@ -113,6 +129,16 @@ int main()
                 case 0:
                     std::cin >> value;
                     single.IH(value);
+                    break;
+                case 1:
+                    std::cin >> value;
+                    single.IT(value);
+                    break;
+                case 2:
+                    single.DH();
+                    break;
+                case 3:
+                    single.DT();
                     break;
                 case 5:
                     single.PS();
