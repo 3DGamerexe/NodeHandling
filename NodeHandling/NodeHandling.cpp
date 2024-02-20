@@ -61,12 +61,15 @@ public:
     }
 
     void DH() {
+        
         if (head != nullptr) {
             IntSLLNode* tmp = head;
             head = head->next;              
             delete tmp;
+
             if (head == nullptr) {
                 tail = nullptr;
+                std::cout << "List is now empty." << endl;
             }
         }
         else {
@@ -81,6 +84,7 @@ public:
         else if (tail == head) { //if there is only 1 element
             delete head;
             tail = head = nullptr;
+            std::cout << "Value deleted. Your list is now empty." << endl; 
         }
         else {
             IntSLLNode* tmp = head;
@@ -96,11 +100,12 @@ public:
     void SD(string el) {
 
         //continue if there are values in the linkedList
-        if (head != 0) {
+        if (head != nullptr) {
             //only one node in the list
             if (head == tail && head->info == el) {
                 delete head;
                 head = tail = nullptr;
+                std::cout << "Value found and deleted. Your list is now empty." << endl; 
             }
 
             //if more than 1 node in the list and the element is the head
@@ -109,7 +114,7 @@ public:
                 head = head->next;
                 delete tmp;
             }
-            //multiple nodes with any value that isn't the head
+
             else {
                 IntSLLNode* pred, * tmp;
                 for (pred = head, tmp = head->next; tmp != nullptr; pred = pred->next, tmp = tmp->next) {
@@ -120,12 +125,8 @@ public:
                         delete tmp;
                         return;
                     }
-                    else {
-                        cout << "Value is not in LinkedList. Sorry." << endl;
-                        return;
-                    }
                 }
-
+                std::cout << "Value is not in LinkedList. Sorry." << endl;
             }
         }
         else {
@@ -235,6 +236,7 @@ public:
             head = tail = nullptr;
             std::cout << "Your list is now empty." << endl;
         }
+        //list is empty
         else if (tail == nullptr) {
             std::cout << "Your list is empty. Try filling the list first." << endl; 
         }
@@ -242,6 +244,48 @@ public:
             tail = tail->prev;
             delete tail->next;
             tail->next = 0;
+        }
+    }
+
+    void SD(string el) {
+        //if there is at least 1 value
+        if (head != nullptr) {
+
+            //only one value in the list that matches user input
+            if (head == tail && head->data == el) {
+                delete head;
+                head = tail = nullptr; 
+                std::cout << "Value found and deleted. Your list is now empty." << endl;
+            }
+
+            // if el is equal to the first value of the list
+            else if (el == head->data) {
+                head = head->next;
+                delete head->prev;
+                head->prev = nullptr; 
+            }
+
+            else {
+                DLLNode* pred, * tmp;
+                for (pred = head, tmp = head->next; tmp != nullptr; pred = pred->next, tmp = tmp->next) {
+                    if (tmp->data == el) {
+                        pred->next = tmp->next;                    
+                        if (tmp->next != nullptr) {
+                            tmp->next->prev = pred;
+                        }
+                        else {
+                            tail = pred;
+                        }
+                        delete tmp;
+                        return;
+                    }
+                }
+                std::cout << "Value is not in the linked list." << endl;
+            }
+        }
+        else {
+            std::cout << "Your list is empty. Add some values first." << endl; 
+            return; 
         }
     }
  
@@ -323,6 +367,10 @@ int main()
                 case 9:
                     doubly.DT();
                     break;
+                case 10:
+                    std::cin >> value; 
+                    doubly.SD(value);
+                    break; 
                 case 11:
                     doubly.PD();
                     break;
