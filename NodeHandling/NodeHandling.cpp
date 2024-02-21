@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 class IntSLLNode {
@@ -126,7 +127,7 @@ public:
                         return;
                     }
                 }
-                std::cout << "Value is not in LinkedList. Sorry." << endl;
+                std::cout << "There is no such node in the list!" << endl;
             }
         }
         else {
@@ -141,6 +142,10 @@ public:
         while (current != nullptr) {
             cout << current->info << " ";
             current = current->next;
+        }
+
+        if (head == tail) {
+            std::cout << "Your list is empty." << endl;
         }
         cout << endl;
     }
@@ -280,7 +285,7 @@ public:
                         return;
                     }
                 }
-                std::cout << "Value is not in the linked list." << endl;
+                std::cout << "There is no such node in the list!" << endl;
             }
         }
         else {
@@ -295,17 +300,20 @@ public:
             std::cout << current->data << " ";
             current = current->next;
         }
+        if (head == tail) {
+            std::cout << "Your list is empty." << endl;
+        }
         cout << endl;
     }
 };
 
 
 void Menu() {
-    std::cout << "\n";
-    std::cout << "\t\tM E N U" << endl;
+    std::cout << endl;
+    std::cout << std::setw(25) << "M E N U" << endl;
     std::cout << "SLL: IH(0), IT(1), DH(2), DT(3), SD(4), PS(5)" << endl;
     std::cout << "DLL: IH(6), IT(7), DH(8), DT(9), SD(10), PD(11)" << endl << endl;
-    std::cout << "Exit Program(12)" << endl;
+    std::cout << "Exit Program(12)" << endl << endl;
 }
 
 int main()
@@ -317,7 +325,7 @@ int main()
 
      do {
         Menu();
-        std::cout << "Choose: ";
+        std::cout << std::setw(20) << "Choose? ";
         std::cin >> menuValue;
 
         if (menuValue < 0 || menuValue > 12 || cin.fail()) {
@@ -379,7 +387,7 @@ int main()
         }
         
         if (menuValue == 12) {
-            std::cout << "Thank you! Have a nice day!";
+            std::cout << "Thank you! Have a nice day!" << endl;
         }
 
      } while (menuValue != 12);
